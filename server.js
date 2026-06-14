@@ -235,4 +235,6 @@ app.post('/admin/delete-project/:id', requireAuth, (req, res) => {
 // 404
 app.use((req, res) => res.status(404).render('404', { page: '' }));
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

@@ -1,0 +1,63 @@
+<%- include('partials/head', {title: 'Projects - MyHub'}) %>
+<%- include('partials/header') %>
+
+<main class="container">
+  <%- include('partials/searchbar') %>
+  <h1 class="page-title">Projects</h1>
+
+  <% if (projects.length === 0) { %>
+    <p class="empty-msg">No projects available yet. Check back soon!</p>
+  <% } else { %>
+  <div class="card-grid two-col">
+    <% projects.forEach(proj => { %>
+      <div class="card project-card"
+           data-name="<%= proj.name %>"
+           data-img="<%= proj.img %>"
+           data-live="<%= proj.liveLink || '' %>"
+           data-source="<%= proj.sourceLink || '' %>"
+           data-download="<%= proj.downloadLink %>">
+        <img src="<%= proj.img %>" alt="<%= proj.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= proj.name %></h3>
+      </div>
+    <% }) %>
+  </div>
+  <% } %>
+</main>
+
+<!-- Project Detail Modal -->
+<div class="modal-overlay" id="projectModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('projectModal')">&times;</button>
+    <img id="projectImg" src="" alt="" class="modal-img" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+    <h3 id="projectName"></h3>
+    <div class="modal-actions">
+      <a id="projectLiveLink" href="#" class="btn-small" target="_blank" rel="noopener">Live Preview</a>
+      <a id="projectSourceLink" href="#" class="btn-small" target="_blank" rel="noopener">Source Code</a>
+      <button id="projectDownloadBtn" class="btn-primary">Download ZIP</button>
+    </div>
+  </div>
+</div>
+
+<!-- Processing Modal -->
+<div class="modal-overlay" id="processingModal">
+  <div class="modal-box">
+    <h3>Processing your file...</h3>
+    <div class="countdown-wrapper">
+      <div class="spinner"></div>
+      <span class="countdown-num" id="countdownText">30</span>
+    </div>
+    <p>Please wait, preparing your download link.</p>
+  </div>
+</div>
+
+<!-- Download Ready Modal -->
+<div class="modal-overlay" id="downloadModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('downloadModal')">&times;</button>
+    <h3>Your file is ready!</h3>
+    <a id="downloadNowBtn" href="#" class="btn-primary">Download ZIP</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

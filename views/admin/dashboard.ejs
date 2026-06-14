@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - MyHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css?v=2">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo-box">
+    <span class="logo-icon">⬡</span>
+    <span class="site-title">MyHub Admin</span>
+  </div>
+  <a href="/admin/logout" class="btn-small">Logout</a>
+</header>
+
+<main class="container">
+  <div class="nav-buttons">
+    <button class="nav-btn" onclick="openModal('addAppModal')">+ Add App</button>
+    <button class="nav-btn" onclick="openModal('addToolModal')">+ Add Tool</button>
+    <button class="nav-btn" onclick="openModal('addProjectModal')">+ Add Project</button>
+    <a href="/" class="nav-btn" target="_blank">View Site</a>
+  </div>
+
+  <h2 class="section-title">Apps (<%= apps.length %>)</h2>
+  <% if (apps.length === 0) { %><p class="empty-msg">No apps added yet.</p><% } %>
+  <div class="card-grid admin-grid">
+    <% apps.forEach(app => { %>
+      <div class="card">
+        <img src="<%= app.img %>" alt="<%= app.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= app.name %></h3>
+        <form action="/admin/delete-app/<%= app.id %>" method="POST">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+
+  <h2 class="section-title">Tools (<%= tools.length %>)</h2>
+  <% if (tools.length === 0) { %><p class="empty-msg">No tools added yet.</p><% } %>
+  <div class="card-grid admin-grid">
+    <% tools.forEach(tool => { %>
+      <div class="card">
+        <img src="<%= tool.img %>" alt="<%= tool.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= tool.name %></h3>
+        <p class="tool-link">/tools/<%= tool.id %></p>
+        <form action="/admin/delete-tool/<%= tool.id %>" method="POST">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+
+  <h2 class="section-title">Projects (<%= projects.length %>)</h2>
+  <% if (projects.length === 0) { %><p class="empty-msg">No projects added yet.</p><% } %>
+  <div class="card-grid admin-grid">
+    <% projects.forEach(proj => { %>
+      <div class="card">
+        <img src="<%= proj.img %>" alt="<%= proj.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= proj.name %></h3>
+        <form action="/admin/delete-project/<%= proj.id %>" method="POST">
+          <button type="submit" class="btn-delete">Delete</button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+</main>
+
+<!-- Add App Modal -->
+<div class="modal-overlay" id="addAppModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('addAppModal')">&times;</button>
+    <h3>Add New App</h3>
+    <form action="/admin/add-app" method="POST" class="admin-form">
+      <input type="text" name="name" placeholder="App Name" required>
+      <input type="url" name="img" placeholder="Image URL (GitHub raw link)" required>
+      <input type="url" name="downloadLink" placeholder="APK Download Link (GitHub raw link)" required>
+      <button type="submit" class="btn-primary">Add App</button>
+    </form>
+  </div>
+</div>
+
+<!-- Add Tool Modal -->
+<div class="modal-overlay" id="addToolModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('addToolModal')">&times;</button>
+    <h3>Add New Tool</h3>
+    <form action="/admin/add-tool" method="POST" class="admin-form">
+      <input type="text" name="name" placeholder="Tool Name" required>
+      <input type="url" name="img" placeholder="Image URL (GitHub raw link)" required>
+      <textarea name="description" rows="4" placeholder="Description / Paragraph" required></textarea>
+      <input type="url" name="videoUrl" placeholder="Video Embed URL (YouTube embed link, optional)">
+      <label class="form-label">Commands (optional)</label>
+      <div id="commandsContainer">
+        <div class="command-input-row">
+          <input type="text" name="commands" placeholder="Command">
+        </div>
+      </div>
+      <button type="button" class="btn-small" onclick="addCommandField()">+ Add Command</button>
+      <button type="submit" class="btn-primary">Add Tool</button>
+    </form>
+  </div>
+</div>
+
+<!-- Add Project Modal -->
+<div class="modal-overlay" id="addProjectModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('addProjectModal')">&times;</button>
+    <h3>Add New Project</h3>
+    <form action="/admin/add-project" method="POST" class="admin-form">
+      <input type="text" name="name" placeholder="Project Name" required>
+      <input type="url" name="img" placeholder="Image URL (GitHub raw link)" required>
+      <input type="url" name="liveLink" placeholder="Live Preview Link">
+      <input type="url" name="sourceLink" placeholder="Source Code Link">
+      <input type="url" name="downloadLink" placeholder="ZIP Download Link (GitHub raw link)" required>
+      <button type="submit" class="btn-primary">Add Project</button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<%- include('partials/head', {title: 'MyHub - Home'}) %>
+<%- include('partials/header') %>
+
+<main class="container">
+  <%- include('partials/searchbar') %>
+  <p class="intro-text">Welcome to MyHub — your one-stop destination to discover the best apps, hand-picked tools, and creative projects. Browse, explore and download everything you need, all in one place.</p>
+
+  <div class="nav-buttons">
+    <a href="/tools" class="nav-btn">Tools</a>
+    <a href="/apps" class="nav-btn">Apps</a>
+    <a href="/projects" class="nav-btn">Projects</a>
+  </div>
+
+  <section class="trending-section">
+    <h2 class="section-title"> Tools</h2>
+    <% if (trendingTools.length === 0) { %>
+      <p class="empty-msg">No tools added yet. Check back soon!</p>
+    <% } else { %>
+    <div class="card-grid two-col">
+      <% trendingTools.forEach(tool => { %>
+        <a href="/tools/<%= tool.id %>" class="card">
+          <img src="<%= tool.img %>" alt="<%= tool.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+          <h3><%= tool.name %></h3>
+        </a>
+      <% }) %>
+    </div>
+    <% } %>
+  </section>
+
+  <section class="trending-section">
+    <h2 class="section-title">Apps</h2>
+    <% if (trendingApps.length === 0) { %>
+      <p class="empty-msg">No apps added yet. Check back soon!</p>
+    <% } else { %>
+    <div class="card-grid two-col">
+      <% trendingApps.forEach(app => { %>
+        <a href="/apps" class="card">
+          <img src="<%= app.img %>" alt="<%= app.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+          <h3><%= app.name %></h3>
+        </a>
+      <% }) %>
+    </div>
+    <% } %>
+  </section>
+
+  <section class="trending-section">
+    <h2 class="section-title">Projects</h2>
+    <% if (trendingProjects.length === 0) { %>
+      <p class="empty-msg">No projects added yet. Check back soon!</p>
+    <% } else { %>
+    <div class="card-grid two-col">
+      <% trendingProjects.forEach(proj => { %>
+        <a href="/projects" class="card">
+          <img src="<%= proj.img %>" alt="<%= proj.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+          <h3><%= proj.name %></h3>
+        </a>
+      <% }) %>
+    </div>
+    <% } %>
+  </section>
+</main>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

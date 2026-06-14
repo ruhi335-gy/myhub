@@ -1,0 +1,58 @@
+<%- include('partials/head', {title: 'Search Results - MyHub'}) %>
+<%- include('partials/header') %>
+
+<main class="container">
+  <%- include('partials/searchbar') %>
+  <h1 class="page-title">Search Results<% if (q) { %> for "<%= q %>"<% } %></h1>
+
+  <% const total = results.tools.length + results.apps.length + results.projects.length; %>
+  <% if (!q) { %>
+    <p class="empty-msg">Type something in the search bar to find apps, tools and projects.</p>
+  <% } else if (total === 0) { %>
+    <p class="empty-msg">No results found for "<%= q %>".</p>
+  <% } else { %>
+
+    <% if (results.tools.length > 0) { %>
+      <h2 class="section-title">Tools</h2>
+      <div class="card-grid">
+        <% results.tools.forEach(tool => { %>
+          <div class="card">
+            <img src="<%= tool.img %>" alt="<%= tool.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+            <h3><%= tool.name %></h3>
+            <a href="/tools/<%= tool.id %>" class="btn-small">Read More</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (results.apps.length > 0) { %>
+      <h2 class="section-title">Apps</h2>
+      <div class="card-grid">
+        <% results.apps.forEach(app => { %>
+          <div class="card">
+            <img src="<%= app.img %>" alt="<%= app.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+            <h3><%= app.name %></h3>
+            <a href="/apps" class="btn-small">View</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+    <% if (results.projects.length > 0) { %>
+      <h2 class="section-title">Projects</h2>
+      <div class="card-grid">
+        <% results.projects.forEach(proj => { %>
+          <div class="card">
+            <img src="<%= proj.img %>" alt="<%= proj.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+            <h3><%= proj.name %></h3>
+            <a href="/projects" class="btn-small">View</a>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

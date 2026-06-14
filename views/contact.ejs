@@ -1,0 +1,21 @@
+<%- include('partials/head', {title: 'Contact - MyHub'}) %>
+<%- include('partials/header') %>
+
+<main class="container static-page">
+  <h1 class="page-title">Contact Us</h1>
+  <p>Have a question, suggestion, or feedback? Fill out the form below and we'll get back to you soon.</p>
+
+  <% if (sent) { %>
+    <p class="thanks-msg">Thanks for reaching out! We'll get back to you soon. 🎉</p>
+  <% } else { %>
+  <form class="contact-form" action="/contact" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn-primary">Send Message</button>
+  </form>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

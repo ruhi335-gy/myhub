@@ -1,0 +1,46 @@
+<%- include('partials/head', {title: 'Apps - MyHub'}) %>
+<%- include('partials/header') %>
+
+<main class="container">
+  <%- include('partials/searchbar') %>
+  <h1 class="page-title">Apps</h1>
+
+  <% if (apps.length === 0) { %>
+    <p class="empty-msg">No apps available yet. Check back soon!</p>
+  <% } else { %>
+  <div class="card-grid two-col">
+    <% apps.forEach(app => { %>
+      <div class="card">
+        <img src="<%= app.img %>" alt="<%= app.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= app.name %></h3>
+        <button class="btn-small install-btn" data-name="<%= app.name %>" data-img="<%= app.img %>" data-link="<%= app.downloadLink %>">Install</button>
+      </div>
+    <% }) %>
+  </div>
+  <% } %>
+</main>
+
+<!-- Processing Modal -->
+<div class="modal-overlay" id="processingModal">
+  <div class="modal-box">
+    <h3>Processing your file...</h3>
+    <div class="countdown-wrapper">
+      <div class="spinner"></div>
+      <span class="countdown-num" id="countdownText">30</span>
+    </div>
+    <p>Please wait, preparing your download link.</p>
+  </div>
+</div>
+
+<!-- Install Now Modal -->
+<div class="modal-overlay" id="installModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('installModal')">&times;</button>
+    <img id="installAppImg" src="" alt="" class="modal-img" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+    <h3 id="installAppName"></h3>
+    <a id="installNowBtn" href="#" class="btn-primary">Install Now</a>
+  </div>
+</div>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>

@@ -1,0 +1,25 @@
+<%- include('partials/head', {title: 'Tools - MyHub'}) %>
+<%- include('partials/header') %>
+
+<main class="container">
+  <%- include('partials/searchbar') %>
+  <p class="disclaimer-text">Disclaimer: All tools listed here are for educational purposes only. Use them responsibly and at your own risk. MyHub does not take responsibility for any misuse.</p>
+
+  <h1 class="page-title">Tools</h1>
+  <% if (tools.length === 0) { %>
+    <p class="empty-msg">No tools available yet. Check back soon!</p>
+  <% } else { %>
+  <div class="card-grid">
+    <% tools.forEach(tool => { %>
+      <a href="/tools/<%= tool.id %>" class="card">
+        <img src="<%= tool.img %>" alt="<%= tool.name %>" onerror="this.src='https://placehold.co/300x200?text=No+Image'">
+        <h3><%= tool.name %></h3>
+        <span class="btn-small">Read More</span>
+      </a>
+    <% }) %>
+  </div>
+  <% } %>
+</main>
+
+<%- include('partials/footer') %>
+<%- include('partials/scripts') %>
